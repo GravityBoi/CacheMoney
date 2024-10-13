@@ -1,6 +1,8 @@
 
 # CacheMoney: Gamified Budgeting App
 
+![Logo](frontend/src/New_Logo.png)
+
 ## Overview
 
 You thought you were doing alright. You thought you were on top of your finances this month. You thought you were fiscally responsible. But then rent is due, your Nebenkosten are shockingly high, you splurged on the Street option at the Polymensa, and you treated yourself to one too many sweet little indulgences (hey, you deserved them!). And let’s not even get started on the abolition of the free print quota for ETH printers (truly dystopian).
