@@ -1,3 +1,4 @@
+
 # CacheMoney: Gamified Budgeting App
 
 ## Overview
@@ -16,6 +17,36 @@ But now, life is CacheMoney. CacheMoney allows you to create a budget and track 
 - **Backend**: Powered by **Flask**, handling API calls, expense uploads, and interaction with the database.
 - **Authentication & Database**: Managed using **Firebase**, ensuring a secure and scalable solution.
 - **Payment Integration**: Submit expenses through **Google Wallet** or potentially via your banking app (future development).
+
+## Example Screenshots
+
+### Dashboard
+![Dashboard showing financial overview](example-pictures/Dashboard.png "Dashboard View")
+The dashboard displays your monthly target, savings, income, and expenses in a clean, easy-to-understand layout.
+
+### Savings Page
+![Savings page showing savings progress](example-pictures/Savings.png "Savings View")
+The savings page helps you track your savings progress against your set goals for each month.
+
+### Income Page
+![Income overview and tracking page](example-pictures/Incomes.png "Income View")
+The income page allows users to track their total income and categorize it by different sources.
+
+### Expenses Page
+![Expense tracker with categorized expenses](example-pictures/Expenses.png "Expense Tracker")
+The expense tracker displays your transactions, categorized by date, amount, and description.
+
+### Manual Expense Entry
+![Manually adding expenses](example-pictures/Expenses-Manual.png "Manual Expense Entry")
+Users can manually input expenses if they're not automatically detected.
+
+### Photo-Based Expense Entry
+![Adding expenses via image upload](example-pictures/Expenses-Photo.png "Photo Expense Entry")
+Users can submit expenses by uploading pictures of bills or receipts, which are automatically processed.
+
+### Assistant
+![Personal Assistant](example-pictures/Assistant.png "Personal Assistant")
+A powerful personal assistant powered by Chipp.ai that guides users through managing their finances and budgeting.
 
 ## Future Improvements
 - **Enhanced Assistant Features**: More assistant functionalities are planned, such as personalized financial advice based on spending habits and goals.

@@ -1,2 +1,3 @@
-API_KEY = "CUimL0GoW9YewTYuD5Tvi58dxeqRxR2S"
+# Add your mistral API KEY here
+API_KEY = ""
 MODEL_ID = "pixtral-12b-2409"

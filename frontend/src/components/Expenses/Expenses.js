@@ -2,67 +2,72 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Button, Form, Container, Row, Col, InputGroup, FormControl, Spinner, Table, DropdownButton, Dropdown } from 'react-bootstrap';
 import TopbarNav from '../TopbarNav/TopbarNav';
 import BreadcrumbAndProfile from '../BreadcrumbAndProfile/BreadcrumbAndProfile';
-import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx'; // Import for exporting data to Excel
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle, faCamera, faImage, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { motion } from 'framer-motion';
-import InfoCard from "../InfoCard/InfoCard";
-import { UserContext } from "../Auth/UserContext"; // Import UserContext
+import { faPlusCircle, faCamera, faImage, faUpload } from "@fortawesome/free-solid-svg-icons"; // Icons for buttons
+import { motion } from 'framer-motion'; // Animation library
+import InfoCard from "../InfoCard/InfoCard"; // Component for displaying info cards
+import { UserContext } from "../Auth/UserContext"; // Import UserContext for user-specific data
 
 function Expenses() {
+  // State declarations for managing expenses and other UI elements
   const [expenses, setExpenses] = useState([]);
-  const [monthlySavings, setMonthlySavings] = useState(0);
-  const [monthlyExpense, setMonthlyExpense] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [expense, setExpense] = useState({
+  const [monthlySavings, setMonthlySavings] = useState(0); // Track monthly savings
+  const [monthlyExpense, setMonthlyExpense] = useState(0); // Track monthly expenses
+  const [searchQuery, setSearchQuery] = useState(""); // Search query for filtering expenses
+  const [expense, setExpense] = useState({ // Form state for adding/editing an expense
     name: '',
     amount: '',
     date: '',
     description: '',
     category: ''
   });
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [totalSavings, setTotalSavings] = useState(0);
-  const [timeRange, setTimeRange] = useState('7 Days');
-  const [editing, setEditing] = useState(false);
-  const [currentExpense, setCurrentExpense] = useState(null);
-  const [addOption, setAddOption] = useState(null);
-  const [dateOption, setDateOption] = useState("today");
-  const [file, setFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // For loading indicator
+  const [successMessage, setSuccessMessage] = useState(null); // Display success message
+  const [totalSavings, setTotalSavings] = useState(0); // Track total savings
+  const [timeRange, setTimeRange] = useState('7 Days'); // Set default time range for filtering expenses
+  const [editing, setEditing] = useState(false); // Track if currently editing an expense
+  const [currentExpense, setCurrentExpense] = useState(null); // Track the expense being edited
+  const [addOption, setAddOption] = useState(null); // Option selected for adding an expense (manual, camera, picture)
+  const [dateOption, setDateOption] = useState("today"); // Date option (today, yesterday, custom)
+  const [file, setFile] = useState(null); // Track the uploaded file
+  const [isLoading, setIsLoading] = useState(false); // For loading indicator during data fetches
   const [errorMessage, setErrorMessage] = useState(null); // For error handling
+
+  // List of predefined categories for expenses
   const categories = ["Utility", "Rent", "Groceries", "Entertainment", "Other"];
 
-  const videoRef = useRef(null); // Ref for video element to show camera stream
-  const canvasRef = useRef(null); // Ref for canvas to capture image from video
+  // Refs for video (camera) and canvas (captured image)
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
+  // Fetch user context data using useContext hook
   const user = useContext(UserContext);
 
+  // Effect to fetch monthly savings and expenses data when the component mounts
   useEffect(() => {
-    // Fetch expenses and savings data from APIs
     const fetchExpenseAndSavingsData = async () => {
       try {
-        // Fetch expenses for the last 6 months
-        const expenseResponse = await fetch(`/api/monthly-savings-last6months?userid=YuwRGr2aNKQMu4LCN3sZcGNqg8g2`);
+        // Fetch data for the last 6 months of savings and expenses
+        const expenseResponse = await fetch(`/api/monthly-savings-last6months?userid=${user.uid}`);
         const expenseData = await expenseResponse.json();
         console.log("Expense data for the last 6 months: ", expenseData);
 
-        // Sort the months and get the most recent one
+        // Sort months in ascending order and extract the latest month
         const sortedMonths = Object.keys(expenseData).sort();
         const latestMonth = sortedMonths.pop();
         console.log("Latest month: ", latestMonth);
 
         const latestMonthData = expenseData[latestMonth];
-        setMonthlyExpense(latestMonthData.expenses);
-        setMonthlySavings(latestMonthData.income - latestMonthData.expenses); // Calculate savings manually
+        setMonthlyExpense(latestMonthData.expenses); // Set monthly expense
+        setMonthlySavings(latestMonthData.income - latestMonthData.expenses); // Calculate monthly savings
 
-        // Fetch total financial summary
-        const summaryResponse = await fetch(`/api/financial_summary?userid=YuwRGr2aNKQMu4LCN3sZcGNqg8g2`);
+        // Fetch total financial summary (total income and expenses)
+        const summaryResponse = await fetch(`/api/financial_summary?userid=${user.uid}`);
         const summaryData = await summaryResponse.json();
         console.log("Financial summary data: ", summaryData);
         setTotalSavings(summaryData.total_income - summaryData.total_expenses); // Set total savings
 
-        // Prepare expenses for the table
+        // Prepare data for the expense table from sorted months
         const expensesForTable = sortedMonths.reduce((acc, month) => {
           const monthData = expenseData[month];
           acc.push({
@@ -73,20 +78,22 @@ function Expenses() {
           });
           return acc;
         }, []);
-        setExpenses(expensesForTable);
+        setExpenses(expensesForTable); // Update state with table data
 
       } catch (error) {
-        console.error("Error fetching expenses or savings data:", error);
+        console.error("Error fetching expenses or savings data:", error); // Log any error encountered
       }
     };
 
-    fetchExpenseAndSavingsData();
-  }, []);
+    fetchExpenseAndSavingsData(); // Call the async function on component mount
+  }, [user.uid]);
 
+  // Effect to fetch expenses based on the selected time range (24 hours, 7 days, 30 days)
   useEffect(() => {
     const fetchExpenses = async () => {
-      setIsLoading(true);
-      setErrorMessage(null);
+      setIsLoading(true); // Start loading
+      setErrorMessage(null); // Reset error message
+
       try {
         let endpoint;
         switch (timeRange) {
@@ -99,56 +106,58 @@ function Expenses() {
           default:
             endpoint = `/api/expense/last30days?userid=${user.uid}`;
         }
-  
+
         const response = await fetch(endpoint);
         if (!response.ok) {
           throw new Error('Failed to fetch expenses');
         }
         const data = await response.json();
-        setExpenses(data.expenses); // Make sure `expenses` is the correct key from the API response
+        setExpenses(data.expenses); // Update state with fetched expenses
       } catch (err) {
-        setErrorMessage(err.message);
+        setErrorMessage(err.message); // Display error message
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // End loading
       }
     };
-  
-    fetchExpenses();
+
+    fetchExpenses(); // Fetch expenses on timeRange or user.uid change
   }, [timeRange, user.uid]);
-  
 
-  // Helper to parse amount correctly
-  const parseAmount = (amount) => {
-    return parseFloat(amount) || 0;
-  };
+  // Helper function to parse amount as a number
+  const parseAmount = (amount) => parseFloat(amount) || 0;
 
+  // Helper function to format date as a readable string
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  };  
-
-  const exportToExcel = () => {
-    const ws = XLSX.utils.json_to_sheet(expenses);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Expenses");
-    XLSX.writeFile(wb, "Expenses.xlsx");
   };
 
+  // Export expenses to Excel file
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(expenses); // Convert expenses to worksheet
+    const wb = XLSX.utils.book_new(); // Create a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Expenses"); // Append the worksheet
+    XLSX.writeFile(wb, "Expenses.xlsx"); // Trigger download as Excel file
+  };
+
+  // Handle selection of adding expense options (manual, camera, etc.)
   const handleOptionClick = (option) => {
     setAddOption(option);
     if (option === "camera") {
-      startCamera();
+      startCamera(); // If camera option selected, start camera
     }
   };
 
+  // Handle editing an existing expense
   const handleEdit = (expense) => {
-    setEditing(true);
-    setCurrentExpense(expense);
-    setExpense(expense);
-    setDateOption("custom");
-    setAddOption("manual"); // Automatically open manual form when editing
+    setEditing(true); // Set editing mode
+    setCurrentExpense(expense); // Set the current expense being edited
+    setExpense(expense); // Populate the form with expense data
+    setDateOption("custom"); // Set date option to custom
+    setAddOption("manual"); // Open manual form for editing
   };
 
+  // Reset form fields and exit editing mode
   const resetForm = () => {
     setExpense({
       name: "",
@@ -158,12 +167,13 @@ function Expenses() {
       isPaid: false,
       category: "",
     });
-    setEditing(false);
-    setCurrentExpense(null);
-    setDateOption("today");
-    setAddOption(null);
+    setEditing(false); // Exit editing mode
+    setCurrentExpense(null); // Clear current expense
+    setDateOption("today"); // Reset date option to today
+    setAddOption(null); // Reset add option
   };
 
+  // Handle form input changes for adding/editing expense
   const handleChange = (e) => {
     const { name, value } = e.target;
     setExpense(prev => ({
@@ -172,16 +182,17 @@ function Expenses() {
     }));
   };
 
+  // Handle date change based on selected option (today, yesterday, custom)
   const handleDateChange = (option) => {
     setDateOption(option);
     if (option === "today") {
       setExpense((prev) => ({
         ...prev,
-        date: new Date().toISOString().split("T")[0],
+        date: new Date().toISOString().split("T")[0], // Set today's date
       }));
     } else if (option === "yesterday") {
       const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
+      yesterday.setDate(yesterday.getDate() - 1); // Set yesterday's date
       setExpense((prev) => ({
         ...prev,
         date: yesterday.toISOString().split("T")[0],
@@ -191,6 +202,7 @@ function Expenses() {
     }
   };
 
+  // Handle form submission to add or update an expense
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!expense.name || !expense.amount || !expense.date) {
@@ -201,69 +213,73 @@ function Expenses() {
     const newExpense = {
       ...expense,
       amount: parseFloat(expense.amount),
-      id: editing ? currentExpense.id : Date.now()
+      id: editing ? currentExpense.id : Date.now() // If editing, preserve the same ID
     };
 
-    setMonthlyExpense(monthlyExpense + newExpense.amount);
+    setMonthlyExpense(monthlyExpense + newExpense.amount); // Update monthly expense
 
     if (editing) {
+      // Update existing expense
       setExpenses(
         expenses.map((exp) => (exp.id === currentExpense.id ? newExpense : exp))
       );
     } else {
+      // Add new expense
       setExpenses([...expenses, newExpense]);
     }
 
-    
-
-    resetForm();
+    resetForm(); // Reset form after submission
   };
 
+  // Handle removal of an expense by ID
   const handleRemove = (id) => {
     const isConfirmed = window.confirm("Are you sure you want to remove this expense?");
     if (isConfirmed) {
-      setExpenses(expenses.filter((exp) => exp.id !== id));
+      setExpenses(expenses.filter((exp) => exp.id !== id)); // Remove the selected expense
     }
   };
 
+  // Handle file change when uploading an image for expense
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile); // Set the selected file in state
-    console.log('File selected:', selectedFile); // Debugging to ensure file is selected
+    setFile(selectedFile); // Update the selected file state
+    console.log('File selected:', selectedFile); // Debugging: Log selected file
   };
 
+  // Handle file submission (upload image file to server)
   const handleFileSubmit = () => {
     if (!file) {
       alert('Please select a file before submitting.');
       return;
     }
-  
+
     const formData = new FormData();
-    formData.append('file', file);
-  
-    setIsLoading(true);
-    setErrorMessage(null);
-    setSuccessMessage(null);
-  
+    formData.append('file', file); // Append the file to FormData object
+
+    setIsLoading(true); // Show loading spinner
+    setErrorMessage(null); // Reset error message
+    setSuccessMessage(null); // Reset success message
+
     fetch('/api/upload', {
       method: 'POST',
-      body: formData,
+      body: formData, // Send the file via POST request
     })
       .then(response => response.json())
       .then(data => {
-        setIsLoading(false);
+        setIsLoading(false); // Stop loading spinner
         if (data.error) {
-          setErrorMessage(data.error);
+          setErrorMessage(data.error); // Show error message if API returns error
         } else {
           console.log('File successfully submitted. Extracted data:', data);
-  
-          // Parse the date
+
+          // Parse date, fallback to today if invalid
           let parsedDate = new Date(data.date);
           if (isNaN(parsedDate.getTime())) {
             console.warn('Invalid date, using today\'s date as fallback.');
             parsedDate = new Date();
           }
-  
+
+          // Create new expense object from extracted data
           const newExpense = {
             id: Date.now(),
             name: data.name || 'Unnamed Expense',
@@ -272,37 +288,39 @@ function Expenses() {
             description: data.description || '',
             category: data.category || 'Uncategorized',
           };
-  
+
           console.log('New expense object:', newExpense);
-  
+
           setExpenses(prevExpenses => {
             const updatedExpenses = [newExpense, ...prevExpenses];
-            console.log('Updated expenses:', updatedExpenses);
+            console.log('Updated expenses:', updatedExpenses); // Log updated expenses
             return updatedExpenses;
           });
 
-          setSuccessMessage("Expense added successfully!");
-          setFile(null);
+          setSuccessMessage("Expense added successfully!"); // Show success message
+          setFile(null); // Reset file input
         }
       })
       .catch(error => {
-        setIsLoading(false);
-        setErrorMessage('Error during file submission: ' + error.message);
+        setIsLoading(false); // Stop loading spinner
+        setErrorMessage('Error during file submission: ' + error.message); // Show error message
       });
   };
 
+  // Start the camera to capture images
   const startCamera = () => {
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({ video: true }) // Request video stream
       .then((stream) => {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
+        videoRef.current.srcObject = stream; // Set stream as the video source
+        videoRef.current.play(); // Start video playback
       })
       .catch((err) => {
-        setErrorMessage("Error accessing the camera: " + err.message);
+        setErrorMessage("Error accessing the camera: " + err.message); // Show error message
       });
   };
 
+  // Capture an image from the camera
   const captureImage = () => {
     const context = canvasRef.current.getContext("2d");
     context.drawImage(
@@ -313,7 +331,7 @@ function Expenses() {
       canvasRef.current.height
     );
 
-    // Convert canvas to blob (image file)
+    // Convert canvas to image file and set it as the selected file
     canvasRef.current.toBlob((blob) => {
       const capturedImageFile = new File([blob], "captured_image.jpg", {
         type: "image/jpeg",
@@ -322,25 +340,28 @@ function Expenses() {
     }, "image/jpeg");
   };
 
+  // Calculate the total expense amount
   const totalExpense = expenses.reduce(
     (total, exp) => total + parseFloat(exp.amount),
     0
   );
 
+  // Data structure for chart (visualization) based on expenses
   const chartData = {
-    labels: expenses.map((exp) => new Date(exp.date)),
+    labels: expenses.map((exp) => new Date(exp.date)), // Use dates as chart labels
     datasets: [
       {
         label: "Total Expenses",
         data: expenses.map((exp) => exp.amount),
         fill: false,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "rgba(75,192,192,0.2)", // Chart color
+        borderColor: "rgba(75,192,192,1)", // Chart border color
         borderWidth: 2,
       },
     ],
   };
 
+  // Chart configuration options
   const chartOptions = {
     scales: {
       x: {
@@ -362,6 +383,7 @@ function Expenses() {
     },
   };
 
+  // Get filtered expenses based on the time range (last 24 hours, last 7 days, etc.)
   const getFilteredExpenses = () => {
     const now = new Date();
     const cutoffDate = new Date(now.getTime() - (timeRange === '24 Hours' ? 24 * 60 * 60 * 1000 : 7 * 24 * 60 * 60 * 1000));
@@ -372,7 +394,7 @@ function Expenses() {
     });
   };
 
-  const filteredExpenses = getFilteredExpenses();
+  const filteredExpenses = getFilteredExpenses(); // Get the filtered expenses
 
   return (
     <Container fluid>

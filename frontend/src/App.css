@@ -1,32 +1,12 @@
+/* Import Google Fonts - Inter font family */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
 
-/* :root {
-  --primary-color: #000758;
-  --primary-color: #000758;
-  --hover-color: #000D9E;
-  --secondary-color: #40E0D0;
-  --secondary-hover-color: #31AFA3;
-  --background-color: #F4F4F4;
-  --input: #DADADA;
-  --link: #E67E22;
-  --link-hover: #B2621C;
-  --link-dark: #B2621C;
-  --link-dark-hover: #E67E22;
-  --text-color: #333333;
-  --warning-color: #FF6B6B;
-  --warning-hover-color: #CB5353;
-  --edit-color: #93f9b8;
-  --edit-hover-color: #65AF80;
-  --page-color: #666;
-  --page-hover-color: #333;
-  --breadcrumb: #DADADA;
-} */
-
+/* Root variables for colors and fonts for easy maintenance */
 :root {
-  --primary-color: #1b1b1b; /* Dark grey for primary color */
+  --primary-color: #1b1b1b; /* Dark grey for primary elements */
   --hover-color: #3d3d3d; /* Slightly lighter grey for hover effects */
-  --secondary-color: #ABB2B9; /* Dodger blue for secondary color */
-  --secondary-hover-color: #4682B4; /* Steel blue for secondary hover */
+  --secondary-color: #ABB2B9; /* Light grey secondary elements */
+  --secondary-hover-color: #4682B4; /* Hover color for secondary elements */
   --background-color: #121212; /* Dark background for the whole page */
   --input: #2a2a2a; /* Darker input fields */
   --link: #1E90FF; /* Dodger blue for links */
@@ -34,192 +14,195 @@
   --link-dark: #4682B4; /* Steel blue for dark links */
   --link-dark-hover: #1E90FF; /* Dodger blue for dark link hover */
   --text-color: #e0e0e0; /* Light grey text color for contrast */
-  --warning-color: #FF6B6B; /* Keep the warning color */
-  --warning-hover-color: #E57373; /* Slightly lighter warning hover color */
-  --edit-color: #63B8FF; /* Light sky blue for edit buttons */
-  --edit-hover-color: #4682B4; /* Steel blue for edit hover */
-  --page-color: #4682B4; /* Steel blue for page controls */
-  --page-hover-color: #1E90FF; /* Dodger blue for page hover */
-  --breadcrumb: #2a2a2a; /* Dark breadcrumb color */
-  --custom-background-color: #cccccc;
+  --warning-color: #FF6B6B; /* Red warning color */
+  --warning-hover-color: #E57373; /* Lighter warning hover color */
+  --edit-color: #63B8FF; /* Light blue for edit buttons */
+  --edit-hover-color: #4682B4; /* Steel blue for edit button hover */
+  --page-color: #4682B4; /* Steel blue for pagination controls */
+  --page-hover-color: #1E90FF; /* Dodger blue for pagination hover */
+  --breadcrumb: #2a2a2a; /* Breadcrumb background color */
+  --custom-background-color: #cccccc; /* Custom light grey background */
 }
 
-
+/* Body styling */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px; /* Set base font size */
-  line-height: 1.5; /* Set base line height */
-  /* color: var(--text-color); */
-  color: var(--primary-color);
-  background-color: var(--custom-background-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Set font stack */
+  font-size: 16px; /* Base font size */
+  line-height: 1.5; /* Line height for readability */
+  color: var(--primary-color); /* Primary text color */
+  background-color: var(--custom-background-color); /* Background color */
 }
 
+/* Main container for layout */
 .main {
-  margin: 20px auto; /* Adds 40px margin on top and bottom, centers horizontally */
-  padding: 40px; /* Keeps padding as is, for inside space */
+  margin: 20px auto; /* Center content horizontally with margin */
+  padding: 40px; /* Padding for inner spacing */
 }
 
+/* General container styling */
 .container {
-  max-width: 800px;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 800px; /* Max width for container */
+  margin-top: 20px; /* Top margin */
+  padding: 20px; /* Padding inside container */
+  background-color: #f9f9f9; /* Light background for contrast */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* Grid row styling */
 .grid-row {
-  margin: 20px 0;
+  margin: 20px 0; /* Vertical spacing between grid rows */
 }
 
+/* Heading styles for various levels */
 h1 {
-  font-size: 2.5em; /* Adjust font size for h1 */
-  line-height: 1.2; /* Adjust line height for h1 */
-  font-weight: bold;
-  color: var(--primary-color);
+  font-size: 2.5em; /* Font size for h1 */
+  line-height: 1.2; /* Line height for spacing */
+  font-weight: bold; /* Bold weight */
+  color: var(--primary-color); /* Primary color */
 }
 
 h2 {
-  font-size: 2em; /* Adjust font size for h2 */
-  line-height: 1.3; /* Adjust line height for h2 */
+  font-size: 2em; /* Font size for h2 */
+  line-height: 1.3; /* Line height for spacing */
   font-weight: bold;
   color: var(--primary-color);
 }
 
 h3 {
-  font-size: 1.5em; /* Adjust font size for h3 */
-  line-height: 1.4; /* Adjust line height for h3 */
+  font-size: 1.5em; /* Font size for h3 */
+  line-height: 1.4;
   color: var(--primary-color);
 }
 
-h4 {
-  font-size: 1.2em; /* Adjust font size for h4 */
-  line-height: 1.5; /* Adjust line height for h4 */
+/* Heading styles for h4, h5, and h6 */
+h4, h5, h6 {
+  font-size: 1.2em; /* Adjusted font size */
+  line-height: 1.5;
 }
 
-h5 {
-  font-size: 1em; /* Adjust font size for h5 */
-  line-height: 1.6; /* Adjust line height for h5 */
-}
-
-h6 {
-  font-size: 0.8em; /* Adjust font size for h6 */
-  line-height: 1.7; /* Adjust line height for h6 */
-}
-
+/* Paragraph styling */
 p {
-  font-size: 1em; /* Adjust font size for paragraphs */
-  line-height: 1.6; /* Adjust line height for paragraphs */
+  font-size: 1em; /* Font size for paragraphs */
+  line-height: 1.6; /* Increased line height for readability */
   color: var(--primary-color);
 }
 
+/* Link styling */
 a {
-  text-decoration: none;
-  color: var(--link);
+  text-decoration: none; /* Remove underline */
+  color: var(--link); /* Use link color */
   font-weight: bold;
-  transition: color 0.3s ease, transform 0.3s ease; /* Add transition for smooth color change and transform */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover effects */
 }
 
+/* Link hover effect */
 a:hover {
-  text-decoration: none;
-  color: var(--link-hover);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  color: var(--link-hover); /* Change color on hover */
+  transform: scale(1.05); /* Slight zoom effect */
 }
 
+/* Dark link styling */
 .dark-link {
   text-decoration: none;
   color: var(--link-dark);
   font-weight: bold;
-  transition: color 0.3s ease, transform 0.3s ease; /* Add transition for smooth color change and transform */
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Dark link hover effect */
 .dark-link:hover {
-  text-decoration: none;
   color: var(--link-dark-hover);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  transform: scale(1.05);
 }
 
-
+/* Primary button styling */
 .primary-button {
   background-color: var(--primary-color);
   color: var(--secondary-color);
-  border-radius: 20px; /* Matched with inputs for consistency */
+  border-radius: 20px;
   border: 2px solid var(--primary-color);
-  padding: 12px 24px; /* Adjusted padding for bigger height */
-  transition: color 0.3s ease, transform 0.3s ease; /* Add transition for smooth color change and transform */
+  padding: 12px 24px; /* Padding for button size */
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Primary button hover effect */
 .primary-button:hover {
   background-color: var(--hover-color);
-  color: var(--secondary-color);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  transform: scale(1.05);
 }
 
+/* Secondary button styling */
 .secondary-button {
   background-color: var(--secondary-color);
   color: var(--primary-color);
-  border-radius: 5px; /* Matched with inputs for consistency */
+  border-radius: 5px;
   border: 2px solid var(--primary-color);
-  padding: 12px 24px; /* Adjusted padding for bigger height */
-  transition: color 0.3s ease, transform 0.3s ease; /* Add transition for smooth color change and transform */
+  padding: 12px 24px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Secondary button hover effect */
 .secondary-button:hover {
   background-color: var(--secondary-hover-color);
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  transform: scale(1.05);
 }
 
+/* Danger button styling */
 .btn-danger {
   background-color: var(--warning-color);
   color: var(--primary-color);
-  transition: color 0.3s ease, transform 0.3s ease;
   border: 1px solid var(--primary-color);
-  border-radius: 20px; /* Add transition for smooth color change and transform */
+  border-radius: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Danger button hover effect */
 .btn-danger:hover {
   background-color: var(--warning-hover-color);
-  color: var(--background-color);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  transform: scale(1.05);
 }
 
+/* Edit button styling */
 .edit {
   background-color: var(--edit-color);
   color: var(--primary-color);
-  transition: color 0.3s ease, transform 0.3s ease;
   border: 1px solid var(--primary-color);
-  border-radius: 20px; /* Add transition for smooth color change and transform */
+  border-radius: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Edit button hover effect */
 .edit:hover {
   background-color: var(--edit-hover-color);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  transform: scale(1.05);
 }
 
+/* Excel button styling */
 .excel-button {
   background-color: var(--background-color);
   color: var(--primary-color);
-  transition: color 0.3s ease, transform 0.3s ease;
   border: 1px solid var(--primary-color);
-  border-radius: 20px; /* Add transition for smooth color change and transform */
+  border-radius: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Excel button hover effect */
 .excel-button:hover {
-  background-color: var(--background-color);
   color: var(--hover-color);
-  transform: scale(1.05); /* Apply scale transform for zoom effect */
+  transform: scale(1.05);
 }
 
+/* Pagination button styling */
 .page {
   background-color: var(--page-color);
   color: var(--background-color);
-  transition: color 0.3s ease, transform 0.3s ease;
   border: 1px solid var(--primary-color);
   border-radius: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Edit button for inline editing */
 .edit-button {
   background-color: transparent;
   border: none;
@@ -232,165 +215,144 @@ a:hover {
   transition: opacity 0.3s ease;
 }
 
+/* Edit button hover effect */
 .edit-button:hover {
   opacity: 0.7;
 }
 
-.edit-button:focus {
-  outline: none;
-}
-
-.page:hover {
-  background-color: var(--page-hover-color);
-  transform: scale(1.05);
-}
-
-.page:disabled {
-  background-color: var(--background-color); /* Light grey or any color for disabled state */
-  color: var(--text-color); /* Darker grey or any color that indicates non-interactivity */
-  border-color: var(--text-color); /* Optional: if you want to change border color for disabled state */
-  cursor: not-allowed; /* Changes the cursor to indicate the button is not clickable */
-  transform: none; /* Removes any transform effects to further indicate non-interactivity */
-}
-
-
+/* Form group styling */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* Space between form elements */
 }
 
+/* Form label styling */
 .form-label {
-  color: var(--primary-color);
+  color: var(--primary-color); /* Use primary color */
   font-weight: bold;
 }
 
+/* Form control styling */
 .form-control {
-  border-radius: 5px; /* Adjust border-radius as needed */
-  border-color: var(--primary-color); /* Change border color to primary color */
+  border-radius: 5px; /* Rounded input fields */
+  border-color: var(--primary-color); /* Primary color border */
 }
 
-
+/* Expense total display styling */
 .total {
   background-color: var(--primary-color);
   color: var(--background-color);
   font-size: 2em;
 }
 
+/* List group item styling */
 .list-group-item {
   display: flex;
-  flex-direction: column; /* Stack content vertically */
-  align-items: flex-start; /* Align items to the start of the container */
+  flex-direction: column;
+  align-items: flex-start;
   padding: 10px 20px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin: 10px 0; /* Spacing around list items */
   background-color: #fff;
   border-radius: 5px;
   border-color: var(--primary-color);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* Button group styling for aligning buttons */
 .button-group {
   display: flex;
-  flex-direction: row; /* Ensures buttons are in a horizontal line */
+  flex-direction: row; /* Horizontal arrangement */
   justify-content: flex-start;
-  margin-top: 10px;
-  margin-bottom: 5px; /* Aligns buttons to the start; adjust as needed */
+  margin: 10px 0; /* Space above and below button group */
 }
 
-
+/* Icon spacing for icons aligned to the left */
 .icon-left {
-  margin-right: 5px; /* Adds space between the icon and the text */
+  margin-right: 5px;
 }
 
+/* Icon spacing for icons aligned to the right */
 .icon-right {
-  margin-left: 5px; /* Adds space between the icon and the text */
+  margin-left: 5px;
 }
 
+/* Card title styling */
 .card-title {
   color: var(--secondary-color);
 }
 
+/* Card text styling */
 .card-text {
   font-weight: bold;
 }
 
+/* Media query for responsiveness */
 @media (min-width: 768px) {
   body {
-    font-size: 14px; /* Smaller font size for mobile */
+    font-size: 14px; /* Smaller font size for tablets and above */
   }
 
   .main {
-    margin: 10px auto; /* Reduced margin */
-    padding: 20px; /* Reduced padding */
+    margin: 10px auto;
+    padding: 20px;
   }
 
   .container {
     margin-top: 10px;
-    padding: 10px; /* Reduced padding */
+    padding: 10px;
   }
 
   .grid-row {
-    margin: 10px 0; /* Reduced margin */
+    margin: 10px 0;
   }
 
-  h1 {
-    font-size: 2em; /* Reduced font size */
-  }
-
-  h2 {
-    font-size: 1.75em; /* Reduced font size */
-  }
-
-  h3 {
-    font-size: 1.25em; /* Reduced font size */
-  }
-
-  h4, h5, h6 {
-    font-size: 1em; /* Uniform font size for smaller headings */
-  }
-
-  p {
-    font-size: 0.9em; /* Reduced font size */
+  h1, h2, h3 {
+    font-size: smaller; /* Reduced font sizes for headings */
   }
 
   .primary-button, .secondary-button, .btn-danger, .edit, .excel-button, .page {
-    padding: 10px 20px; /* Adjusted padding */
-    border-radius: 15px; /* Adjusted border-radius */
+    padding: 10px 20px; /* Adjusted button padding */
+    border-radius: 15px;
   }
 
   .list-group-item {
-    padding: 8px 16px; /* Reduced padding */
+    padding: 8px 16px;
   }
+}
 
-
-  /* Styled table for the expense tracker */
+/* Styled table for the expense tracker */
 .styled-expense-table {
-  background-color: var(--background-color); /* Matches the background color for consistency */
+  background-color: var(--background-color);
   border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for a subtle 3D effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
+/* Expense table header styling */
 .styled-expense-table th {
-  background-color: var(--primary-color); /* Dark header background for better contrast */
-  color: #ffffff; /* White text for readability */
+  background-color: var(--primary-color);
+  color: #ffffff;
   font-weight: bold;
 }
 
+/* Expense table cell padding */
 .styled-expense-table td, .styled-expense-table th {
-  padding: 12px; /* Increased padding for better spacing */
+  padding: 12px;
   text-align: left;
 }
 
+/* Alternating row color */
 .styled-expense-table tr:nth-child(even) {
-  background-color: #f1f1f1; /* Light gray background for alternating rows */
+  background-color: #f1f1f1;
 }
 
+/* Table row hover effect */
 .styled-expense-table tr:hover {
-  background-color: var(--secondary-color); /* Hover effect to highlight rows */
-  color: #ffffff; /* White text on hover for contrast */
+  background-color: var(--secondary-color);
+  color: #ffffff;
 }
 
+/* Add expense button styling */
 .button-group .add-expense-btn {
   background-color: var(--secondary-color);
   color: var(--primary-color);
@@ -399,10 +361,9 @@ a:hover {
   transition: all 0.3s ease;
 }
 
+/* Add expense button hover effect */
 .button-group .add-expense-btn:hover {
   background-color: var(--secondary-hover-color);
   transform: scale(1.05);
   color: white;
-}
-
 }
