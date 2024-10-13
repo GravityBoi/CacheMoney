@@ -21,31 +21,31 @@ But now, life is CacheMoney. CacheMoney allows you to create a budget and track 
 ## Example Screenshots
 
 ### Dashboard
-![Dashboard showing financial overview](example-pictures/Dashboard.png "Dashboard View")
+![Dashboard showing financial overview](frontend/Example-Pictures/Dashboard.png "Dashboard View")
 The dashboard displays your monthly target, savings, income, and expenses in a clean, easy-to-understand layout.
 
 ### Savings Page
-![Savings page showing savings progress](example-pictures/Savings.png "Savings View")
+![Savings page showing savings progress](frontend/Example-Pictures/Savings.png "Savings View")
 The savings page helps you track your savings progress against your set goals for each month.
 
 ### Income Page
-![Income overview and tracking page](example-pictures/Incomes.png "Income View")
+![Income overview and tracking page](frontend/Example-Pictures/Incomes.png "Income View")
 The income page allows users to track their total income and categorize it by different sources.
 
 ### Expenses Page
-![Expense tracker with categorized expenses](example-pictures/Expenses.png "Expense Tracker")
+![Expense tracker with categorized expenses](frontend/Example-Pictures/Expenses.png "Expense Tracker")
 The expense tracker displays your transactions, categorized by date, amount, and description.
 
 ### Manual Expense Entry
-![Manually adding expenses](example-pictures/Expenses-Manual.png "Manual Expense Entry")
+![Manually adding expenses](frontend/Example-Pictures/Expenses-Manual.png "Manual Expense Entry")
 Users can manually input expenses if they're not automatically detected.
 
 ### Photo-Based Expense Entry
-![Adding expenses via image upload](example-pictures/Expenses-Photo.png "Photo Expense Entry")
+![Adding expenses via image upload](frontend/Example-Pictures/Expenses-Photo.png "Photo Expense Entry")
 Users can submit expenses by uploading pictures of bills or receipts, which are automatically processed.
 
 ### Assistant
-![Personal Assistant](example-pictures/Assistant.png "Personal Assistant")
+![Personal Assistant](frontend/Example-Pictures/Assistant.png "Personal Assistant")
 A powerful personal assistant powered by Chipp.ai that guides users through managing their finances and budgeting.
 
 ## Future Improvements
